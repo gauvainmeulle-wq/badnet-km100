@@ -2,7 +2,7 @@ name: Scraper BadNet
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 3 * * *'  # Chaque jour à 3h UTC
   workflow_dispatch:
 
 jobs:
@@ -10,28 +10,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout du dépôt
       - uses: actions/checkout@v3
 
+      # 2️⃣ Setup Python
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      # 3️⃣ Installer les dépendances
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4 geopy
 
+      # 4️⃣ Exécuter le scraper
       - name: Run scraper
         run: |
           python scraper.py
 
+      # 5️⃣ Commit & push du JSON mis à jour
       - name: Commit & push updated JSON
-  run: |
-    git config --local user.email "action@github.com"
-    git config --local user.name "GitHub Action"
-    git add tournois.json
-    git commit -m "Mise à jour automatique tournois BadNet" || echo "Pas de changements"
-    git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/gauvainmeulle-wq/badnet-km100.git HEAD:main
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add tournois.json
+          git commit -m "Mise à jour automatique tournois BadNet" || echo "Pas de changements"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/gauvainmeulle-wq/badnet-km100.git HEAD:main
+
 
 
