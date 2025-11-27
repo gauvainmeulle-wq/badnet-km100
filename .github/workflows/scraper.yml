@@ -27,9 +27,11 @@ jobs:
           python scraper.py
 
       - name: Commit & push updated JSON
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add tournois.json
-          git commit -m "Mise à jour automatique tournois BadNet" || echo "Pas de changements"
-          git push
+  run: |
+    git config --local user.email "action@github.com"
+    git config --local user.name "GitHub Action"
+    git add tournois.json
+    git commit -m "Mise à jour automatique tournois BadNet" || echo "Pas de changements"
+    git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/gauvainmeulle-wq/badnet-km100.git HEAD:main
+
+
