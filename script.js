@@ -1,4 +1,4 @@
-fetch("https://gauvainmeulle-wq.github.io/badnet-km100/tournois.json")
+fetch("tournois.json")
   .then(response => response.json())
   .then(data => {
     const container = document.getElementById("tournois-badnet");
@@ -29,3 +29,4 @@ fetch("https://gauvainmeulle-wq.github.io/badnet-km100/tournois.json")
     document.getElementById("tournois-badnet").innerHTML =
       "<p>Erreur de chargement des tournois.</p>";
   });
+
